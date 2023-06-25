@@ -1,25 +1,28 @@
-# (Application Name)
+# Fight Game
 
-#### (Brief Description of Application)
+#### A local two player fight game
 
-#### By (Your Name Here)
+#### By Liam
 
 ## Technologies Used
 
-* _List all_
-* _the major technologies_
-* _you used in your project_
-* _here_
+* JavaScript
+* HTML
+* CSS
+* Jest
+* Node
+
+_Followed tutorial from [Chris Courses](https://www.youtube.com/watch?v=vyqbNFMDRGQ)_
 
 ## Description
 
 ## Setup/Installation Requirements
 
-* _This is a great place_
-* _to list setup instructions_
-* _in a simple_
-* _easy-to-understand_
-* _format_
+* _Clone this repository to your desktop `$git clone https://github.com/lcmpbll/fightGame`_
+* _In your terminal `$cd fightGame`_
+* _Install dependancies `$npm install`_
+* _Start game `$npm run start`_
+
 
 ## Known Bugs
 
