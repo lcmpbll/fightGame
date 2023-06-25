@@ -1,10 +1,34 @@
-import exampleTestFunction from '../src/js/biz-func.js';
+import Sprite from '../src/js/sprite.js';
 
 
-describe("exampleTestFunction", () => {
+describe("Sprite", () => {
+  let newSprite;
 
-  test("should....", () => {
-    expect(exampleTestFunction()).toEqual("hi there, from the deck");
+  beforeEach(() => {
+
+    newSprite = new Sprite({
+      position : {
+        x: 0,
+        y: 0
+      }
+ 
+    });
+  });
+  
+  // position : {
+  //   x: 0,
+  //   y: 0 },
+  // color: 'red',
+  // velocity: {
+  //   x: 0,
+  //   y: 0
+  // },
+  // speed: 5,
+  // jumpHeight: 20,
+
+
+  test("should create a new sprite with a position {0,0} ", () => {
+    expect(newSprite.position).toEqual({x: 0, y: 0});
   });
 
 });
