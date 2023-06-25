@@ -10,25 +10,28 @@ describe("Sprite", () => {
       position : {
         x: 0,
         y: 0
-      }
+      },
+      color: 'red',  velocity: {
+        x: 0,
+        y: 0
+      },
+      speed: 5,
+      jumpHeight: 20,
+      
  
     });
   });
   
-  // position : {
-  //   x: 0,
-  //   y: 0 },
-  // color: 'red',
-  // velocity: {
-  //   x: 0,
-  //   y: 0
-  // },
-  // speed: 5,
-  // jumpHeight: 20,
+
+
 
 
   test("should create a new sprite with a position {0,0} ", () => {
     expect(newSprite.position).toEqual({x: 0, y: 0});
+  });
+  
+  test("should create a new sprite with the color red", () => {
+    expect(newSprite.color).toEqual('red');
   });
 
 });
