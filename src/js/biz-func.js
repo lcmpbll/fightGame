@@ -1,8 +1,22 @@
 // import $ from 'jquery';
+import { c }from './index.js';
 
- const exampleTestFunction = () => {
-  console.log('hi there, from the deck');
-  return 'hi there, from the deck';
-};
+class Sprite {
+  constructor(position, color) {
+    this.position = position;
+    this.color = color;
+  }
+  
+  draw () {
+    c.fillStyle = this.color;
+    c.fillRect(this.position.x, this.position.y, 50, 150);
+  }
 
-export default exampleTestFunction;
+}
+
+
+
+
+
+
+export default Sprite;
