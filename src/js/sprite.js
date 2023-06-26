@@ -73,26 +73,27 @@ class Sprite {
   
   shortJump () {
     if(this.isOnGround === true && this.isDucked === false){
-      this.isDucked === true;
+      this.isDucked = true;
       this.height = this.headHeight * 0.5;
     }
   }
   
   shortLand () {
-    this.isDucked === false;
+    this.isDucked = false;
     this.height = this.headHeight;
   }
   
   //currently more of a leg sweep dodge
   duck () {
+    console.log(this.isDucked);
     if(this.isOnGround === true && this.isDucked === false){
-      this.isDucked === true;
+      this.isDucked = true;
       this.position.y +=this.headHeight * 0.5;
     }
   }
   
   stand () {
-    this.isDucked === false;
+    this.isDucked = false;
     this.position.y -= this.headHeight * 0.5;
   }
   
