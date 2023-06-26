@@ -89,6 +89,13 @@ describe("Sprite", () => {
     expect(newSprite.height).toEqual(height);
   });
   
+  test("Should should not  half the total height of the sprite when the sprite ducks", () => {
+    const height = newSprite.headHeight;
+    newSprite.isOnGround = false;
+    newSprite.duck();
+    expect(newSprite.height).toEqual(height);
+  });
+  
   
 
 });
