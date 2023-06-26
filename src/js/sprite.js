@@ -45,7 +45,7 @@ class Sprite {
   
   update () {
     this.draw();
-    this.attackBox.position.x = this.position.x - this.attackBox.offset.x;
+    this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y;
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
@@ -71,17 +71,29 @@ class Sprite {
   }
   
   
-  //currently more of a leg sweep dodge
-  duck () {
+  shortJump () {
     if(this.isOnGround === true && this.isDucked === false){
       this.isDucked === true;
       this.height = this.headHeight * 0.5;
     }
   }
   
-  stand () {
+  shortLand () {
     this.isDucked === false;
     this.height = this.headHeight;
+  }
+  
+  //currently more of a leg sweep dodge
+  duck () {
+    if(this.isOnGround === true && this.isDucked === false){
+      this.isDucked === true;
+      this.position.y +=this.headHeight * 0.5;
+    }
+  }
+  
+  stand () {
+    this.isDucked === false;
+    this.position.y -= this.headHeight * 0.5;
   }
   
   switch () {
@@ -101,7 +113,9 @@ class Sprite {
     setTimeout(()=> {
       this.isAttacking = false;
     }, 100);
+    // this.attackCheck(target);
   }
+
   
   
 
