@@ -68,6 +68,27 @@ describe("Sprite", () => {
     expect(newSprite.isOnGround).toEqual(false);
   });
   
+  //function tests
+  
+  test("Should subtract the sprites jumpheight from the y velocity if the sprite is not on the ground", () => {
+    newSprite.isOnGround = true;
+    newSprite.jump();
+    expect(newSprite.velocity.y).toEqual(newSprite.velocity.y - newSprite.jumpHeight);
+  });
+  
+  test("Should not subtract the sprites jumpheight from the y velocity if the sprite is not on the ground", () => {
+    const veloY = newSprite.velocity.y;
+    newSprite.jump();
+    expect(newSprite.velocity.y).toEqual(veloY);
+  });
+  
+  test("Should should half the total height of the sprite when the sprite ducks", () => {
+    const height = newSprite.headHeight * 0.5;
+    newSprite.isOnGround = true;
+    newSprite.duck();
+    expect(newSprite.height).toEqual(height);
+  });
+  
   
 
 });
