@@ -146,10 +146,11 @@ window.addEventListener('keydown', (event) =>{
   case 's': 
     player.duck();
     break;
+  case 'c':
+    player.shortJump();
+    break;
   case 'e':
-    
     player.attack();
-
     break;
   case 'ArrowRight':
     keys.arrowRight.pressed = true;
@@ -166,6 +167,9 @@ window.addEventListener('keydown', (event) =>{
     break;
   case 'ArrowDown':
     enemy.duck();
+    break;
+  case 'Alt':
+    enemy.shortJump();
     break;
   case '/': 
     enemy.attack();
@@ -185,6 +189,9 @@ window.addEventListener('keyup', (event) =>{
   case 's':
     player.stand();
     break;
+  case 'c':
+    player.shortLand();
+    break;
   case 'ArrowLeft':
     keys.arrowLeft.pressed = false;
     break;
@@ -193,6 +200,9 @@ window.addEventListener('keyup', (event) =>{
     break;
   case 'ArrowDown': 
     enemy.stand();
+    break;
+  case 'Alt':
+    enemy.shortLand();
     break;
   
   }
