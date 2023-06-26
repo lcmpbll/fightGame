@@ -96,6 +96,41 @@ describe("Sprite", () => {
     expect(newSprite.height).toEqual(height);
   });
   
+  test("Should return to standing height after ducking", () => {
+    const height = newSprite.headHeight;
+    newSprite.isOnGround = true;
+    newSprite.duck();
+    newSprite.stand();
+    expect(newSprite.height).toEqual(height);
+  });
   
+  test("Shoud increase velocity by 0.7 when update is run", () => {
+    newSprite.position.y = 300;
+    newSprite.update();
+  
+    expect(newSprite.velocity.y).toEqual(0.7);
+  });
+  
+  test("Shoud increase velocity by 0.7 each time update is run", () => {
+    newSprite.position.y = 300;
+    newSprite.update();
+    newSprite.update();
+    expect(newSprite.velocity.y).toEqual(1.4);
+  });
+  
+    
+  test("Shoud  sprite position y be lower than 373 and update is run isOnGround will be false", () => {
+    newSprite.position.y = 373;
+    newSprite.update();
+    // newSprite.update();
+    expect(newSprite.isOnGround).toEqual(false);
+  });
+  
+  test("Shoud  sprite y position be closer than 373 when update is run the sprite should be on the ground ", () => {
+    newSprite.position.y = 373;
+    newSprite.update();
+    newSprite.update();
+    expect(newSprite.isOnGround).toEqual(true);
+  });
 
 });
