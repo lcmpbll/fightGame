@@ -1,8 +1,8 @@
 import Sprite from './sprite.js';
 // import $ from 'jquery';
-// import 'bootstrap';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../css/styles.css';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/styles.css';
 
 
 export const canvas = document.querySelector('canvas');
@@ -104,13 +104,16 @@ function animate() {
     enemy.velocity.x = enemy.speed;
   } else enemy.velocity.x = 0;
   
-  
+  // detect collision when attacking
   if (rectangleCollisionCheck({
     rectangle1: player,
     rectangle2: enemy
-  }) && player.isAttacking){
+  })){
     player.isAttacking = false;
-    
+    console.log('attack hit 1');
+    let currentHealthE = enemy.getCurrentHealthPercent(player.damage) * 100;
+    document.querySelector("#enemy-health").style.width =  `${currentHealthE}%`;
+    console.log(enemy.health.currentHealth);
   }
   
   if(rectangleCollisionCheck({

@@ -27,8 +27,12 @@ class Sprite {
       color: 'yellow'
     };
     this.isAttacking = false;
-    this.health = health;
+    this.health = {
+      currentHealth: health,
+      totalHealth: health
+    },
     this.frontEdge = this.width;
+    this.damage = 10;
   }
   
   draw () {
@@ -117,6 +121,10 @@ class Sprite {
     // this.attackCheck(target);
   }
 
+  getCurrentHealthPercent (damage) {
+    this.health.currentHealth -= damage;
+    return this.health.currentHealth / this.health.totalHealth;
+  }
   
   
 

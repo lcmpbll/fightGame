@@ -1,0 +1,52 @@
+* {
+  
+  
+  box-sizing: border-box;
+}
+/* Padding not taken into account in width of element */
+.container {
+  position: relative;
+  display: inline-block;
+  
+}
+
+.statBar {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  padding: 20px;
+}
+
+
+.statBar__timer {
+  background-color: red;
+  height: 100px;
+  width: 100px;
+  flex-shrink: 0;
+}
+
+/* .statBar__playerSide{
+  
+} */
+
+.statBar__absolute {
+  background-color: red;
+  position: relative;
+  width: 100%;
+  height: 30px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.statBar__Health {
+  background-color: yellow;
+
+  height: 30px;
+}
+
+
+
