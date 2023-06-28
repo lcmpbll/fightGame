@@ -3,6 +3,18 @@ import Sprite from '../src/js/sprite.js';
 
 describe("Sprite", () => {
   let newSprite;
+  const playerStartInfo = {
+    position : {
+      x: 0,
+      y: 0
+    }, 
+    velocity: {
+      x: 0,
+      y: 0
+    },
+    lastKey: 'd'
+    
+  };
 
   beforeEach(() => {
 
@@ -189,6 +201,21 @@ describe("Sprite", () => {
     newSprite.lastKey = 'aR';
     newSprite.switch();
     expect(newSprite.attackBox.offset.x).toEqual(0);
+  });
+  
+  test("Should reset the players Positition", () => {
+    newSprite.position = {
+      x: 120,
+      y: 374
+    };
+    newSprite.reset(playerStartInfo);
+    expect(newSprite.position).toEqual(playerStartInfo.position);
+  });
+  
+  test("Should reset the players Positition", () => {
+    newSprite.health.currentHealth = 10;
+    newSprite.reset(playerStartInfo);
+    expect(newSprite.health.currentHealth).toEqual(newSprite.health.totalHealth);
   });
   
   
