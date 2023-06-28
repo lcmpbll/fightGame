@@ -119,8 +119,11 @@ function animate() {
   if(rectangleCollisionCheck({
     rectangle1: enemy,
     rectangle2: player
-  }) && enemy.isAttacking){
+  })){
     enemy.isAttacking = false;
+    let currentHealthP = player.getCurrentHealthPercent(enemy.damage) * 100;
+    document.querySelector("#player-health").style.width = `${currentHealthP}%`;
+    console.log(player.health.currentHealth);
   }
   
  
