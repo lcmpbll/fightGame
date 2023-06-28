@@ -1,5 +1,5 @@
 // import $ from 'jquery';
-// import { c, canvas } from './index.js';
+import { c, canvas } from './index.js';
 
 const gravity = .7;
 
@@ -36,25 +36,25 @@ class Sprite {
   }
   
   draw () {
-    // c.fillStyle = this.color;
-    // c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    c.fillStyle = this.color;
+    c.fillRect(this.position.x, this.position.y, this.width, this.height);
     
     // attack box
     if(this.isAttacking){
-      // c.fillStyle = 'yellow';
-      // c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
+      c.fillStyle = 'yellow';
+      c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
       
     }
   }
   
   update () {
-    // this.draw();
+    this.draw();
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y;
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
     // 524 = canvas.height
-    if (this.position.y + this.headHeight + this.velocity.y >= 524){
+    if (this.position.y + this.headHeight + this.velocity.y >= canvas.height){
       this.velocity.y = 0;
       this.isOnGround = true;
     } else {
@@ -101,7 +101,6 @@ class Sprite {
   }
   
   switch () {
-    console.log('switch');
     if(this.lastKey === 'd' || this.lastKey === 'aR'){
       
       this.attackBox.offset.x = 0;
@@ -120,7 +119,7 @@ class Sprite {
     // this.attackCheck(target);
   }
 
-  getCurrentHealthPercent (damage) {
+  getCurrentHealthFraction (damage) {
     this.health.currentHealth -= damage;
     return this.health.currentHealth / this.health.totalHealth;
   }
