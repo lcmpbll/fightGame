@@ -95,7 +95,7 @@ describe("Sprite", () => {
     expect(newSprite.height).toEqual(height);
   });
   
-  test("Should should not  half the total height of the sprite when the sprite ducks", () => {
+  test("Should not  half the total height of the sprite when the sprite ducks", () => {
     const height = newSprite.headHeight;
     newSprite.isOnGround = false;
     newSprite.duck();
@@ -107,6 +107,14 @@ describe("Sprite", () => {
     newSprite.isOnGround = true;
     newSprite.duck();
     newSprite.stand();
+    expect(newSprite.height).toEqual(height);
+  });
+  
+  test("Should land the sprite on the ground after a shortJump", () => {
+    const height = newSprite.headHeight;
+    newSprite.isOnGround = true;
+    newSprite.shortJump();
+    newSprite.shortLand();
     expect(newSprite.height).toEqual(height);
   });
   
@@ -155,6 +163,36 @@ describe("Sprite", () => {
 
     expect(newSprite.isAttacking).toEqual(false);
   });
+  
+  test("Attack should return 1 if damage is zero. ", () => {
+    const damage = 0;
+
+    expect(newSprite.getCurrentHealthFraction(damage)).toEqual(1);
+  });
+  
+  test("Attack should return (150-10)/150. if damage === 10 ", () => {
+    const damage = 10;
+    
+    expect(newSprite.getCurrentHealthFraction(damage)).toEqual((150 -10)/ 150);
+  });
+  
+  
+  test("Should set the offSet.x to -50 if the last key was aL", () => {
+   
+    newSprite.lastKey = 'aL';
+    newSprite.switch();
+    expect(newSprite.attackBox.offset.x).toEqual(-50);
+  });
+  
+  test("Should set the offSet.x to 0 if the last key was aR", () => {
+   
+    newSprite.lastKey = 'aR';
+    newSprite.switch();
+    expect(newSprite.attackBox.offset.x).toEqual(0);
+  });
+  
+  
+  
   
   
 
