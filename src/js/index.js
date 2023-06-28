@@ -141,7 +141,7 @@ function animate() {
     rectangle2: enemy
   })){
     player.isAttacking = false;
-    let currentHealthE = enemy.getCurrentHealthPercent(player.damage) * 100;
+    let currentHealthE = enemy.getCurrentHealthFraction(player.damage) * 100;
     document.querySelector("#enemy-health").style.width =  `${currentHealthE}%`;
     console.log(enemy.health.currentHealth);
   }
@@ -151,7 +151,7 @@ function animate() {
     rectangle2: player
   })){
     enemy.isAttacking = false;
-    let currentHealthP = player.getCurrentHealthPercent(enemy.damage) * 100;
+    let currentHealthP = player.getCurrentHealthFraction(enemy.damage) * 100;
     document.querySelector("#player-health").style.width = `${currentHealthP}%`;
     console.log(player.health.currentHealth);
   }
