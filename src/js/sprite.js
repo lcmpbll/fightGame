@@ -1,5 +1,5 @@
 // import $ from 'jquery';
-import { c, canvas } from './index.js';
+// import { c, canvas } from './index.js';
 
 const gravity = .7;
 
@@ -36,25 +36,25 @@ class Sprite {
   }
   
   draw () {
-    c.fillStyle = this.color;
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    // c.fillStyle = this.color;
+    // c.fillRect(this.position.x, this.position.y, this.width, this.height);
     
     // attack box
     if(this.isAttacking){
-      c.fillStyle = 'yellow';
-      c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
+      // c.fillStyle = 'yellow';
+      // c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
       
     }
   }
   
   update () {
-    this.draw();
+    // this.draw();
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y;
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
     // 524 = canvas.height
-    if (this.position.y + this.headHeight + this.velocity.y >= canvas.height){
+    if (this.position.y + this.headHeight + this.velocity.y >= 524){
       this.velocity.y = 0;
       this.isOnGround = true;
     } else {
@@ -67,7 +67,7 @@ class Sprite {
   
   jump () {
 
-    if(this.isOnGround === true){
+    if(this.isOnGround === true && this.isDucked === false){
       this.velocity.y = this.velocity.y - this.jumpHeight;
 
      
@@ -89,7 +89,6 @@ class Sprite {
   
   //currently more of a leg sweep dodge
   duck () {
-    console.log(this.isDucked);
     if(this.isOnGround === true && this.isDucked === false){
       this.isDucked = true;
       this.position.y +=this.headHeight * 0.5;
