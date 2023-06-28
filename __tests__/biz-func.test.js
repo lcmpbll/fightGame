@@ -18,6 +18,10 @@ describe("Sprite", () => {
       },
       speed: 5,
       jumpHeight: 20,
+      offset: {
+        x: 0,
+        y: 0
+      }
       
  
     });
@@ -71,9 +75,11 @@ describe("Sprite", () => {
   //function tests
   
   test("Should subtract the sprites jumpheight from the y velocity if the sprite is not on the ground", () => {
+    const startVelocity = newSprite.velocity.y;
     newSprite.isOnGround = true;
     newSprite.jump();
-    expect(newSprite.velocity.y).toEqual(newSprite.velocity.y - newSprite.jumpHeight);
+    
+    expect(newSprite.velocity.y).toEqual(startVelocity - newSprite.jumpHeight);
   });
   
   test("Should not subtract the sprites jumpheight from the y velocity if the sprite is not on the ground", () => {
@@ -82,10 +88,10 @@ describe("Sprite", () => {
     expect(newSprite.velocity.y).toEqual(veloY);
   });
   
-  test("Should should half the total height of the sprite when the sprite ducks", () => {
+  test("Should should shorten the sprite by half from the bottom ewhen the sprite short jumps", () => {
     const height = newSprite.headHeight * 0.5;
     newSprite.isOnGround = true;
-    newSprite.duck();
+    newSprite.shortJump();
     expect(newSprite.height).toEqual(height);
   });
   
