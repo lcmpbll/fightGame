@@ -138,5 +138,24 @@ describe("Sprite", () => {
     newSprite.update();
     expect(newSprite.isOnGround).toEqual(true);
   });
+  
+  test("Shoud have a property speed that is a number. ", () => {
+
+    expect(typeof newSprite.speed).toEqual("number");
+  });
+  
+  test("Attack should cause is attacking to be true. ", () => {
+    newSprite.attack();
+    expect(newSprite.isAttacking).toEqual(true);
+  });
+  
+  test("Should have isAttacking be false after 1 second. ", async () => {
+    newSprite.attack();
+    await new Promise((r) => setTimeout(r, 1000));
+
+    expect(newSprite.isAttacking).toEqual(false);
+  });
+  
+  
 
 });
