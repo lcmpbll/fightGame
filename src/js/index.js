@@ -82,6 +82,37 @@ function rectangleCollisionCheck ({rectangle1, rectangle2}) {
   }
 }
 
+function checkWhoWon({player, enemy, timerId}) {
+  clearTimeout(timerId);
+  document.querySelector('#display-text').style.display = 'flex';
+  if(player.health.currentHealth === enemy.health.currentHealth){
+    document.querySelector('#display-text').innerHTML = "Tie";
+     
+  } else if ( player.health.currentHealth > enemy.health.currentHealth){
+    document.querySelector('#display-text').innerHTML = "Player 1 Wins";
+  } else {
+    document.querySelector('#display-text').innerHTML = "Player 2 Wins";
+  }
+}
+
+let timer = 60;
+let timerId; 
+
+function decreaseTimer () {
+  
+  if(timer > 0) {
+    timerId = setTimeout(decreaseTimer, 1000);
+    timer -=1;
+    document.querySelector("#timer").innerHTML = timer;
+  }
+  if(timer === 0 || player.health.currentHealth === 0 || enemy.health.currentHealth === 0){
+    checkWhoWon({player, enemy, timerId});
+  }
+}
+
+
+ 
+decreaseTimer();
 // animation loop 
 function animate() {
   window.requestAnimationFrame(animate);
@@ -110,7 +141,6 @@ function animate() {
     rectangle2: enemy
   })){
     player.isAttacking = false;
-    console.log('attack hit 1');
     let currentHealthE = enemy.getCurrentHealthPercent(player.damage) * 100;
     document.querySelector("#enemy-health").style.width =  `${currentHealthE}%`;
     console.log(enemy.health.currentHealth);
@@ -126,7 +156,10 @@ function animate() {
     console.log(player.health.currentHealth);
   }
   
- 
+  // end game based on health 
+  if(enemy.health.currentHealth <= 0 || player.health.currentHealth <= 0){
+    checkWhoWon({player, enemy, timerId});
+  }
   
 }
 
