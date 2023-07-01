@@ -1,8 +1,12 @@
-import Sprite from './sprite.js';
+import Fighter from './fighters.js';
+import backgroundImage from '../assets/scenes/background/background.png';
+import shopImage from '../assets/scenes/decorations/shop_anim.png';
+import Sprite from '../js/sprite.js';
 // import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/styles.css';
+import * as u from './utility.js';
 
 
 export const canvas = document.querySelector('canvas');
@@ -15,13 +19,32 @@ canvas.height = 524;
 c.fillRect(0,0,canvas.width, canvas.height);
 
 
+// background
+const background  = new Sprite({
+  position: {
+    x : 0,
+    y: 0
+  },
+  imageSrc: backgroundImage
+});
+
+const shop = new Sprite({
+  position: {
+    x: 560,
+    y: 200
+  },
+  imageSrc: shopImage, 
+  scale: 2.5,
+  frames : 6
+});
+
 
 
 
 
 // Player and Enemy
 // could add width and height
-const player = new Sprite({
+const player = new Fighter({
   position : {
     x: 0,
     y: 0 },
@@ -44,7 +67,7 @@ const player = new Sprite({
 
 
 
-const enemy = new Sprite({
+const enemy = new Fighter({
   position : {
     x: 950,
     y: 0 },
@@ -77,91 +100,20 @@ const keys = {
   }
 };
 
-function rectangleCollisionCheck ({rectangle1, rectangle2}) {
-  if(rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x && 
-    rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width && 
-    rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
-    rectangle1.attackBox.position.y  <= rectangle2.position.y + rectangle2.height && rectangle1.isAttacking ){
-    rectangle1.isAttacking = false;
-    return true;
-  }
-}
-
-let gameId;
-
-function checkWhoWon({player, enemy, timerId}) {
-  clearTimeout(timerId);
-  document.querySelector('#display-text').style.display = 'flex';
-  if(player.health.currentHealth === enemy.health.currentHealth){
-    document.querySelector('#display-text').innerHTML = "Tie";
-    
-  } else if ( player.health.currentHealth > enemy.health.currentHealth){
-    document.querySelector('#display-text').innerHTML = "Player 1 Wins";
-    player.recordWin();
-  } else {
-    document.querySelector('#display-text').innerHTML = "Player 2 Wins";
-    enemy.recordWin();
-  }
-  gameId = setTimeout(resetGame, 1000);
  
-}
 
 
-let timer = 60;
-let timerId;
- 
-function resetGame (){
-  player.reset({
-    position : {
-      x: 0,
-      y: 0
-    }, 
-    velocity: {
-      x: 0,
-      y: 0
-    },
-    lastKey: ''
-    
-  });
-  enemy.reset({
-    position : {
-      x: 950,
-      y: 0 
-    },
-    velocity: {
-      x: 0,
-      y: 0
-    },
-    lastKey: ''
-    
-  });
-  timer = 60;
-  clearTimeout(gameId);
-  
-  document.querySelector('#display-text').style.display = 'none';
-  
-}
-
-function decreaseTimer () {
-  
-  if(timer > 0) {
-    timerId = setTimeout(decreaseTimer, 1000);
-    timer -=1;
-    document.querySelector("#timer").innerHTML = timer;
-  }
-  if(timer === 0 ){
-    checkWhoWon({player, enemy, timerId});
-  }
-}
 
 
  
-decreaseTimer();
+u.decreaseTimer();
 // animation loop 
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = 'black';
   c.fillRect(0,0, canvas.width, canvas.height);
+  background.update();
+  shop.update();
   player.update();
   enemy.update();
   
@@ -180,17 +132,17 @@ function animate() {
   } else enemy.velocity.x = 0;
   
   // detect collision when attacking
-  if (rectangleCollisionCheck({
+  if (u.rectangleCollisionCheck({
     rectangle1: player,
     rectangle2: enemy
   })){
     player.isAttacking = false;
     let currentHealthE = enemy.getCurrentHealthFraction(player.damage) * 100;
     document.querySelector("#enemy-health").style.width =  `${currentHealthE}%`;
-    console.log(enemy.health.currentHealth);
+   
   }
   
-  if(rectangleCollisionCheck({
+  if(u.rectangleCollisionCheck({
     rectangle1: enemy,
     rectangle2: player
   })){
@@ -202,7 +154,7 @@ function animate() {
   
   // end game based on health 
   if(enemy.health.currentHealth <= 0 || player.health.currentHealth <= 0){
-    checkWhoWon({player, enemy, timerId});
+    u.checkWhoWon({player, enemy});
   }
   
 }
