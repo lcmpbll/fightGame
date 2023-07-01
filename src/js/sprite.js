@@ -130,7 +130,7 @@ class Sprite {
   }
   
   reset(resetPositions) {
-    console.log(resetPositions);
+
     this.health.currentHealth = this.health.totalHealth;
     this.position.x = resetPositions.position.x;
     this.position.y = resetPositions.position.y;

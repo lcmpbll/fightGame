@@ -87,6 +87,8 @@ function rectangleCollisionCheck ({rectangle1, rectangle2}) {
   }
 }
 
+let gameId;
+
 function checkWhoWon({player, enemy, timerId}) {
   clearTimeout(timerId);
   document.querySelector('#display-text').style.display = 'flex';
@@ -100,7 +102,7 @@ function checkWhoWon({player, enemy, timerId}) {
     document.querySelector('#display-text').innerHTML = "Player 2 Wins";
     enemy.recordWin();
   }
-  setTimeout(resetGame, 1000);
+  gameId = setTimeout(resetGame, 1000);
  
 }
 
@@ -134,6 +136,7 @@ function resetGame (){
     
   });
   timer = 60;
+  clearTimeout(gameId);
   
   document.querySelector('#display-text').style.display = 'none';
   
