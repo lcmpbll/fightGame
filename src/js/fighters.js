@@ -1,11 +1,22 @@
 // import $ from 'jquery';
 import { c, canvas } from './index.js';
+import Sprite from './sprite.js';
 
 const gravity = .7;
 
-class Fighter {
-  constructor({position, color, velocity, speed, jumpHeight, health = 150, offset}) {
-    this.position = position;
+class Fighter extends Sprite {
+  
+  constructor({position, color, velocity, speed, jumpHeight, health = 150, offset, imageSrc, scale = 1, frames = 1, frameHold = 10, imgOffset = {x: 0, y: 0}, sprites = {}}) {
+    super({
+      position,
+      imageSrc,
+      scale,
+      frames,
+      frameHold,
+      imgOffset
+     
+    });
+    
     this.color = color;
     this.velocity = velocity;
     this.headHeight = 150;
@@ -34,22 +45,33 @@ class Fighter {
     this.frontEdge = this.width;
     this.damage = 10;
     this.gamesWon = 0;
-  }
-  
-  draw () {
-    c.fillStyle = this.color;
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
-    
-    // attack box
-    if(this.isAttacking){
-      c.fillStyle = 'yellow';
-      c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
+    this.framesElapsed = 0;
+    this.currentFrame = 0;
+    this.sprites = sprites;
+    for(const sprite in this.sprites){
+      sprites[sprite].image = new Image();
+      sprites[sprite].image.src = sprites[sprite].imageSrc;
       
     }
+    
+    
   }
+  
+  // draw () {
+  //   c.fillStyle = this.color;
+  //   c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    
+  //   // attack box
+  //   if(this.isAttacking){
+  //     c.fillStyle = 'yellow';
+  //     c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
+      
+  //   }
+  // }
   
   update () {
     this.draw();
+    this.animateFrames();
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y;
     this.position.x += this.velocity.x;

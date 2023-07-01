@@ -2,6 +2,16 @@ import Fighter from './fighters.js';
 import backgroundImage from '../assets/scenes/background/background.png';
 import shopImage from '../assets/scenes/decorations/shop_anim.png';
 import Sprite from '../js/sprite.js';
+/// Player Imports
+import playerIdle from '../assets/Martial Hero/Sprites/Idle.png';
+import playerRun from '../assets/Martial Hero/Sprites/Run.png';
+import playerAttack1 from '../assets/Martial Hero/Sprites/Attack1.png';
+import playerAttack2 from '../assets/Martial Hero/Sprites/Attack2.png';
+import playerDeath from '../assets/Martial Hero/Sprites/Death.png';
+import playerJump from '../assets/Martial Hero/Sprites/Jump.png';
+import playerHit from '../assets/Martial Hero/Sprites/Take Hit.png';
+// import playerHi2 from '../assets/Martial Hero/Sprites/TakeHit2.png';
+import playerFall from '../assets/Martial Hero/Sprites/Fall.png';
 // import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -43,7 +53,6 @@ const shop = new Sprite({
 
 
 // Player and Enemy
-// could add width and height
 const player = new Fighter({
   position : {
     x: 0,
@@ -59,6 +68,29 @@ const player = new Fighter({
     x: 0,
     y: 0
   },
+  imageSrc: playerIdle,
+  frames: 8,
+  scale: 2.5,
+  imgOffset: {
+    x: 215,
+    y: 157
+  },
+  sprites : {
+    idle : {
+      imageSrc: playerIdle,
+      frames: 8
+    },
+    run: {
+      imageSrc: playerRun,
+      frames: 8
+    },
+    attack1 : {
+      imageSrc: playerAttack1,
+      frames: 8
+    }
+    
+  }
+  
   
 });
 
@@ -81,6 +113,13 @@ const enemy = new Fighter({
   offset: {
     x: - 50,
     y: 0
+  },
+  imageSrc: playerIdle,
+  frames: 8,
+  scale: 2.5,
+  imgOffset: {
+    x: 215,
+    y: 157
   }
 });
 
@@ -116,11 +155,13 @@ function animate() {
   shop.update();
   player.update();
   enemy.update();
-  
+  player.image = player.sprites.idle.image;
   if(keys.a.pressed === true && player.lastKey === 'a'){
     player.velocity.x = - player.speed;
+    player.image = player.sprites.run.image;
   } else if ( keys.d.pressed === true && player.lastKey === 'd'){
     player.velocity.x = player.speed;
+    player.image = player.sprites.run.image;
   } else {
     player.velocity.x = 0;
   }
@@ -168,6 +209,7 @@ window.addEventListener('keydown', (event) =>{
   case 'd':
     keys.d.pressed = true;
     player.lastKey = 'd';
+    
     player.switch();
     break;
   case 'a':
@@ -217,6 +259,7 @@ window.addEventListener('keyup', (event) =>{
   switch (event.key) {
   case 'd':
     keys.d.pressed = false;
+    
     break;
   case 'a':
     keys.a.pressed = false;
