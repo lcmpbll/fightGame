@@ -15,6 +15,10 @@ canvas.height = 524;
 c.fillRect(0,0,canvas.width, canvas.height);
 
 
+
+
+
+
 // Player and Enemy
 // could add width and height
 const player = new Sprite({
@@ -31,8 +35,10 @@ const player = new Sprite({
   offset: {
     x: 0,
     y: 0
-  }
+  },
+  
 });
+
 
 
 
@@ -76,7 +82,6 @@ function rectangleCollisionCheck ({rectangle1, rectangle2}) {
     rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width && 
     rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
     rectangle1.attackBox.position.y  <= rectangle2.position.y + rectangle2.height && rectangle1.isAttacking ){
-    console.log('rectangle1 attck hit');
     rectangle1.isAttacking = false;
     return true;
   }
@@ -87,16 +92,52 @@ function checkWhoWon({player, enemy, timerId}) {
   document.querySelector('#display-text').style.display = 'flex';
   if(player.health.currentHealth === enemy.health.currentHealth){
     document.querySelector('#display-text').innerHTML = "Tie";
-     
+    
   } else if ( player.health.currentHealth > enemy.health.currentHealth){
     document.querySelector('#display-text').innerHTML = "Player 1 Wins";
+    player.recordWin();
   } else {
     document.querySelector('#display-text').innerHTML = "Player 2 Wins";
+    enemy.recordWin();
   }
+  setTimeout(resetGame, 1000);
+ 
 }
 
+
 let timer = 60;
-let timerId; 
+let timerId;
+ 
+function resetGame (){
+  player.reset({
+    position : {
+      x: 0,
+      y: 0
+    }, 
+    velocity: {
+      x: 0,
+      y: 0
+    },
+    lastKey: ''
+    
+  });
+  enemy.reset({
+    position : {
+      x: 950,
+      y: 0 
+    },
+    velocity: {
+      x: 0,
+      y: 0
+    },
+    lastKey: ''
+    
+  });
+  timer = 60;
+  
+  document.querySelector('#display-text').style.display = 'none';
+  
+}
 
 function decreaseTimer () {
   
@@ -105,7 +146,7 @@ function decreaseTimer () {
     timer -=1;
     document.querySelector("#timer").innerHTML = timer;
   }
-  if(timer === 0 || player.health.currentHealth === 0 || enemy.health.currentHealth === 0){
+  if(timer === 0 ){
     checkWhoWon({player, enemy, timerId});
   }
 }
@@ -249,5 +290,5 @@ window.addEventListener('keyup', (event) =>{
 
 
 
-console.log(player);
+
 

@@ -33,6 +33,7 @@ class Sprite {
     },
     this.frontEdge = this.width;
     this.damage = 10;
+    this.gamesWon = 0;
   }
   
   draw () {
@@ -54,7 +55,7 @@ class Sprite {
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
     // 524 = canvas.height
-    if (this.position.y + this.headHeight + this.velocity.y >= canvas.height){
+    if (this.position.y + this.headHeight + this.velocity.y >= 524){
       this.velocity.y = 0;
       this.isOnGround = true;
     } else {
@@ -124,6 +125,22 @@ class Sprite {
     return this.health.currentHealth / this.health.totalHealth;
   }
   
+  recordWin () {
+    this.gamesWon ++;
+  }
+  
+  reset(resetPositions) {
+    console.log(resetPositions);
+    this.health.currentHealth = this.health.totalHealth;
+    this.position.x = resetPositions.position.x;
+    this.position.y = resetPositions.position.y;
+    // this.attackBox.offset = this.resetPosition.face;
+    
+    this.velocity.x = resetPositions.velocity.x;
+    this.velocity.y = resetPositions.velocity.y;
+    // this.switch();
+    // this.update(); 
+  }
   
 
 }
