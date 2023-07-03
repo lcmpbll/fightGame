@@ -81,6 +81,7 @@ class Fighter extends Sprite {
       this.velocity.y = 0;
       this.isOnGround = true;
     } else {
+      this.switchSprite(spriteNames.fall);
       this.velocity.y += gravity;
       this.isOnGround = false;
       // this.image = this.sprites[jump].imageS
@@ -97,6 +98,7 @@ class Fighter extends Sprite {
   jump () {
 
     if(this.isOnGround === true && this.isDucked === false){
+      this.switchSprite(spriteNames.fall);
       this.velocity.y = this.velocity.y - this.jumpHeight;
 
      
@@ -106,6 +108,7 @@ class Fighter extends Sprite {
   
   shortJump () {
     if(this.isOnGround === true && this.isDucked === false){
+      this.switchSprite(spriteNames.jump);
       this.isDucked = true;
       this.height = this.headHeight * 0.5;
     }
@@ -142,9 +145,11 @@ class Fighter extends Sprite {
   
   attack () {
     this.isAttacking = true;
+    this.switchSprite(spriteNames.attack1);
     setTimeout(()=> {
       this.isAttacking = false;
-    }, 100);
+      
+    }, 1000);
     // this.attackCheck(target);
   }
 
@@ -184,6 +189,43 @@ class Fighter extends Sprite {
         this.image = this.sprites.run.image;
         this.frames = this.sprites.run.frames;
       }
+      break;
+    case spriteNames.attack1: 
+      if(this.image !== this.sprites.attack1.image){
+        this.image = this.sprites.attack1.image;
+        this.frames = this.sprites.attack1.frames;
+      }
+      break;
+    case spriteNames.attack2: 
+      if(this.image !== this.sprites.attack2.image){
+        this.image = this.sprites.attack2.image;
+        this.frames = this.sprites.attack2.frames;
+      }
+      break;
+    case spriteNames.jump: 
+      if(this.image !== this.sprites.jump.image){
+        this.image = this.sprites.jump.image;
+        this.frames = this.sprites.jump.frames;
+      }
+      break;
+    case spriteNames.fall: 
+      if(this.image !== this.sprites.fall.image){
+        this.image = this.sprites.fall.image;
+        this.frames = this.sprites.fall.frames;
+      }
+      break;
+    case spriteNames.takeHit: 
+      if(this.image !== this.sprites.takeHit.image){
+        this.image = this.sprites.takeHit.image;
+        this.frames = this.sprites.takeHit.frames;
+      }
+      break;
+    case spriteNames.death: 
+      if(this.image !== this.sprites.death.image){
+        this.image = this.sprites.death.image;
+        this.frames = this.sprites.death.frames;
+      }
+      break;
       
     }
   }
