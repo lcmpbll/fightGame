@@ -1,5 +1,5 @@
 // import $ from 'jquery';
-import { c, canvas } from './index.js';
+import { canvas, spriteNames } from './index.js';
 import Sprite from './sprite.js';
 
 const gravity = .7;
@@ -83,6 +83,7 @@ class Fighter extends Sprite {
     } else {
       this.velocity.y += gravity;
       this.isOnGround = false;
+      // this.image = this.sprites[jump].imageS
       
     }
     
@@ -167,6 +168,24 @@ class Fighter extends Sprite {
     this.velocity.y = resetPositions.velocity.y;
     // this.switch();
     // this.update(); 
+  }
+  
+  switchSprite(sprite){
+    switch(sprite) {
+    case spriteNames.idle:
+      if(this.image !== this.sprites.idle.image){
+        
+        this.image = this.sprites.idle.image;
+        this.frames = this.sprites.idle.frames;
+      }
+      break;
+    case spriteNames.run:
+      if(this.image !== this.sprites.run.image){
+        this.image = this.sprites.run.image;
+        this.frames = this.sprites.run.frames;
+      }
+      
+    }
   }
   
 
