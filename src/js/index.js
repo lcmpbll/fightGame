@@ -10,8 +10,17 @@ import playerAttack2 from '../assets/Martial Hero/Sprites/Attack2.png';
 import playerDeath from '../assets/Martial Hero/Sprites/Death.png';
 import playerJump from '../assets/Martial Hero/Sprites/Jump.png';
 import playerHit from '../assets/Martial Hero/Sprites/Take Hit.png';
-// import playerHi2 from '../assets/Martial Hero/Sprites/TakeHit2.png';
 import playerFall from '../assets/Martial Hero/Sprites/Fall.png';
+// Enemy imports 
+import enemyIdle from '../assets/EnemyHero/Sprites/Idle.png';
+import enemyRun from '../assets/EnemyHero/Sprites/Run.png';
+import enemyAttack1 from '../assets/EnemyHero/Sprites/Attack1.png';
+import enemyAttack2 from '../assets/EnemyHero/Sprites/Attack1.png';
+import enemyDeath from '../assets/EnemyHero/Sprites/Death.png';
+import enemyJump from '../assets/EnemyHero/Sprites/Jump.png';
+import enemyHit from '../assets/EnemyHero/Sprites/Take hit.png';
+import enemyFall from '../assets/EnemyHero/Sprites/Fall.png';
+
 // import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -86,7 +95,27 @@ const player = new Fighter({
     },
     attack1 : {
       imageSrc: playerAttack1,
-      frames: 8
+      frames: 6
+    },
+    attack2: {
+      imageSrc: playerAttack2,
+      frames: 6
+    },
+    death: {
+      imageSrc: playerDeath,
+      frames: 6
+    },
+    fall: {
+      imageSrc: playerFall,
+      frames: 2
+    },
+    jump: {
+      imageSr: playerJump,
+      frames: 2
+    },
+    takeHit: {
+      imageSrc: playerHit,
+      frames: 4
     }
     
   }
@@ -114,14 +143,49 @@ const enemy = new Fighter({
     x: - 50,
     y: 0
   },
-  imageSrc: playerIdle,
-  frames: 8,
+  imageSrc: enemyIdle,
+  frames: 4,
   scale: 2.5,
   imgOffset: {
     x: 215,
     y: 157
+  },
+  sprites : {
+    idle : {
+      imageSrc: enemyIdle,
+      frames: 4
+    },
+    run: {
+      imageSrc: enemyRun,
+      frames: 8
+    },
+    attack1 : {
+      imageSrc: enemyAttack1,
+      frames: 4
+    },
+    attack2: {
+      imageSrc: enemyAttack2,
+      frames: 4
+    },
+    death: {
+      imageSrc: enemyDeath,
+      frames: 7
+    },
+    fall: {
+      imageSrc: enemyFall,
+      frames: 2
+    },
+    jump: {
+      imageSr: enemyJump,
+      frames: 2
+    },
+    takeHit: {
+      imageSrc: enemyHit,
+      frames: 3
+    }
   }
 });
+
 
 
 const keys = {
@@ -139,12 +203,21 @@ const keys = {
   }
 };
 
- 
+export const spriteNames = {
+  idle: 'idle',
+  run: 'run',
+  jump: 'jump',
+  attack1: 'attack1',
+  attack2: 'attack2',
+  death: 'death',
+  fall: 'fall',
+  takeHit: 'takeHit'
+};
 
 
 
 
- 
+
 u.decreaseTimer();
 // animation loop 
 function animate() {
@@ -155,13 +228,13 @@ function animate() {
   shop.update();
   player.update();
   enemy.update();
-  player.image = player.sprites.idle.image;
+  player.switchSprite(spriteNames.idle);
   if(keys.a.pressed === true && player.lastKey === 'a'){
     player.velocity.x = - player.speed;
-    player.image = player.sprites.run.image;
+    player.switchSprite(spriteNames.run);
   } else if ( keys.d.pressed === true && player.lastKey === 'd'){
     player.velocity.x = player.speed;
-    player.image = player.sprites.run.image;
+    player.switchSprite(spriteNames.run);
   } else {
     player.velocity.x = 0;
   }
@@ -190,7 +263,6 @@ function animate() {
     enemy.isAttacking = false;
     let currentHealthP = player.getCurrentHealthFraction(enemy.damage) * 100;
     document.querySelector("#player-health").style.width = `${currentHealthP}%`;
-    console.log(player.health.currentHealth);
   }
   
   // end game based on health 
