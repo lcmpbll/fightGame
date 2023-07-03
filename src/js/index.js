@@ -3,14 +3,14 @@ import backgroundImage from '../assets/scenes/background/background.png';
 import shopImage from '../assets/scenes/decorations/shop_anim.png';
 import Sprite from '../js/sprite.js';
 /// Player Imports
-import playerIdle from '../assets/Martial Hero/Sprites/Idle.png';
-import playerRun from '../assets/Martial Hero/Sprites/Run.png';
-import playerAttack1 from '../assets/Martial Hero/Sprites/Attack1.png';
-import playerAttack2 from '../assets/Martial Hero/Sprites/Attack2.png';
-import playerDeath from '../assets/Martial Hero/Sprites/Death.png';
-import playerJump from '../assets/Martial Hero/Sprites/Jump.png';
-import playerHit from '../assets/Martial Hero/Sprites/Take Hit.png';
-import playerFall from '../assets/Martial Hero/Sprites/Fall.png';
+import playerIdle from '../assets/PlayerHero/Sprites/Idle.png';
+import playerRun from '../assets/PlayerHero/Sprites/Run.png';
+import playerAttack1 from '../assets/PlayerHero/Sprites/Attack1.png';
+import playerAttack2 from '../assets/PlayerHero/Sprites/Attack2.png';
+import playerDeath from '../assets/PlayerHero/Sprites/Death.png';
+import playerJump from '../assets/PlayerHero/Sprites/Jump.png';
+import playerHit from '../assets/PlayerHero/Sprites/Take Hit.png';
+import playerFall from '../assets/PlayerHero/Sprites/Fall.png';
 // Enemy imports 
 import enemyIdle from '../assets/EnemyHero/Sprites/Idle.png';
 import enemyRun from '../assets/EnemyHero/Sprites/Run.png';
@@ -228,7 +228,15 @@ function animate() {
   shop.update();
   player.update();
   enemy.update();
-  player.switchSprite(spriteNames.idle);
+  if(player.isAttacking === false && player.isOnGround === true){
+    player.switchSprite(spriteNames.idle);
+  }
+  if(enemy.isAttacking === false && enemy.isOnGround === true){
+    enemy.switchSprite(spriteNames.idle);
+  }
+
+  
+  // running
   if(keys.a.pressed === true && player.lastKey === 'a'){
     player.velocity.x = - player.speed;
     player.switchSprite(spriteNames.run);
@@ -241,8 +249,10 @@ function animate() {
   
   if(keys.arrowLeft.pressed === true && enemy.lastKey === 'aL'){
     enemy.velocity.x = -enemy.speed;
+    enemy.switchSprite(spriteNames.run);
   }else if (keys.arrowRight.pressed === true && enemy.lastKey === 'aR'){
     enemy.velocity.x = enemy.speed;
+    enemy.switchSprite(spriteNames.run);
   } else enemy.velocity.x = 0;
   
   // detect collision when attacking
