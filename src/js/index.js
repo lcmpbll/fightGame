@@ -311,7 +311,9 @@ animate();
 
 
 window.addEventListener('keydown', (event) =>{
-  console.log(event.key);
+  if (player.dead) {
+    return;
+  }
   switch (event.key) {
   case 'd':
     keys.d.pressed = true;
@@ -336,29 +338,36 @@ window.addEventListener('keydown', (event) =>{
   case 'e':
     player.attack();
     break;
-  case 'ArrowRight':
-    keys.arrowRight.pressed = true;
-    enemy.lastKey = 'aR';
-    enemy.switch();
-    break;
-  case 'ArrowLeft': 
-    keys.arrowLeft.pressed = true;
-    enemy.lastKey = 'aL';
-    enemy.switch();
-    break;
-  case 'ArrowUp': 
-    enemy.jump();
-    break;
-  case 'ArrowDown':
-    enemy.duck();
-    break;
-  case 'Alt':
-    enemy.shortJump();
-    break;
-  case '/': 
-    enemy.attack();
-    break;
   } 
+  
+  if (enemy.dead){
+    return;
+  } else {
+    switch(event.key){
+    case 'ArrowRight':
+      keys.arrowRight.pressed = true;
+      enemy.lastKey = 'aR';
+      enemy.switch();
+      break;
+    case 'ArrowLeft': 
+      keys.arrowLeft.pressed = true;
+      enemy.lastKey = 'aL';
+      enemy.switch();
+      break;
+    case 'ArrowUp': 
+      enemy.jump();
+      break;
+    case 'ArrowDown':
+      enemy.duck();
+      break;
+    case 'Alt':
+      enemy.shortJump();
+      break;
+    case '/': 
+      enemy.attack();
+      break;
+    }
+  }
 });
 
 window.addEventListener('keyup', (event) =>{
