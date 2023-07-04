@@ -150,6 +150,7 @@ class Fighter extends Sprite {
   }
   
   takeHit(damage){
+    console.log(damage);
     this.health.current -= damage;
     this.switchSprite(spriteNames.takeHit);
   }
