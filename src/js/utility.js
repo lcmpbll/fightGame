@@ -23,7 +23,8 @@ export function rectangleCollisionCheck ({rectangle1, rectangle2}) {
     rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width && 
     rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
     rectangle1.attackBox.position.y  <= rectangle2.position.y + rectangle2.height && rectangle1.isAttacking ){
-    rectangle1.isAttacking = false;
+   
+    
     return true;
   }
 }
@@ -71,9 +72,11 @@ export function checkWhoWon({player, enemy}) {
   } else if ( player.health.currentHealth > enemy.health.currentHealth){
     document.querySelector('#display-text').innerHTML = "Player 1 Wins";
     player.recordWin();
+    enemy.switchSprite('death');
   } else {
     document.querySelector('#display-text').innerHTML = "Player 2 Wins";
     enemy.recordWin();
+    player.switchSprite('death');
   }
   // gameId = setTimeout(resetGame, 1000);
  
