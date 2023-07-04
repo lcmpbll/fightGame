@@ -39,7 +39,8 @@ export function resetGame ({player, enemy}){
       x: 0,
       y: 0
     },
-    lastKey: ''
+    lastKey: '',
+    dead: false
     
   });
   enemy.reset({
@@ -51,7 +52,8 @@ export function resetGame ({player, enemy}){
       x: 0,
       y: 0
     },
-    lastKey: ''
+    lastKey: '',
+    dead: false,
     
   });
   timer = 60;
