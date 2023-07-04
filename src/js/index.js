@@ -273,7 +273,7 @@ function animate() {
     rectangle1: player,
     rectangle2: enemy
   }) && player.currentFrame === 4){
-    player.isAttacking = false;
+    enemy.takeHit(player.damage);
     let currentHealthE = enemy.getCurrentHealthFraction(player.damage) * 100;
     document.querySelector("#enemy-health").style.width =  `${currentHealthE}%`;
    
@@ -287,7 +287,8 @@ function animate() {
     rectangle1: enemy,
     rectangle2: player
   }) && enemy.currentFrame === 2){
-    enemy.isAttacking = false;
+    
+    player.takeHit(enemy.damage);
     let currentHealthP = player.getCurrentHealthFraction(enemy.damage) * 100;
     document.querySelector("#player-health").style.width = `${currentHealthP}%`;
   } 
