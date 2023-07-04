@@ -3,23 +3,25 @@ import backgroundImage from '../assets/scenes/background/background.png';
 import shopImage from '../assets/scenes/decorations/shop_anim.png';
 import Sprite from '../js/sprite.js';
 /// Player Imports
-import playerIdle from '../assets/PlayerHero/Sprites/Idle.png';
-import playerRun from '../assets/PlayerHero/Sprites/Run.png';
-import playerAttack1 from '../assets/PlayerHero/Sprites/Attack1.png';
-import playerAttack2 from '../assets/PlayerHero/Sprites/Attack2.png';
-import playerDeath from '../assets/PlayerHero/Sprites/Death.png';
-import playerJump from '../assets/PlayerHero/Sprites/Jump.png';
-import playerHit from '../assets/PlayerHero/Sprites/Take Hit.png';
-import playerFall from '../assets/PlayerHero/Sprites/Fall.png';
+import playerIdle from '../assets/PlayerHero/Idle.png';
+import playerFall from '../assets/PlayerHero/Fall.png';
+import playerRun from '../assets/PlayerHero/Run.png';
+import playerJump from '../assets/PlayerHero/Jump.png';
+import playerAttack1 from '../assets/PlayerHero/Attack1.png';
+import playerAttack2 from '../assets/PlayerHero/Attack2.png';
+import playerDeath from '../assets/PlayerHero/Death.png';
+import playerHit from '../assets/PlayerHero/Takehit.png';
 // Enemy imports 
-import enemyIdle from '../assets/EnemyHero/Sprites/Idle.png';
-import enemyRun from '../assets/EnemyHero/Sprites/Run.png';
-import enemyAttack1 from '../assets/EnemyHero/Sprites/Attack1.png';
-import enemyAttack2 from '../assets/EnemyHero/Sprites/Attack1.png';
-import enemyDeath from '../assets/EnemyHero/Sprites/Death.png';
-import enemyJump from '../assets/EnemyHero/Sprites/Jump.png';
-import enemyHit from '../assets/EnemyHero/Sprites/Take hit.png';
-import enemyFall from '../assets/EnemyHero/Sprites/Fall.png';
+import enemyIdle from '../assets/EnemyHero/Sprites/Idling.png';
+import enemyRun from '../assets/EnemyHero/Sprites/Running.png';
+import enemyJump from '../assets/EnemyHero/Sprites/Jumping.png';
+import enemyAttack1 from '../assets/EnemyHero/Sprites/Attacking1.png';
+import enemyAttack2 from '../assets/EnemyHero/Sprites/Attacking2.png';
+import enemyDeath from '../assets/EnemyHero/Sprites/Dying.png';
+import enemyFall from '../assets/EnemyHero/Sprites/Falling.png';
+import enemyHit from '../assets/EnemyHero/Sprites/Takehiting.png';
+
+
 
 // import $ from 'jquery';
 import 'bootstrap';
@@ -73,9 +75,13 @@ const player = new Fighter({
   },
   speed: 5,
   jumpHeight: 20,
-  offset: {
-    x: 0,
-    y: 0
+  attackBox: {
+    offset: {
+      x: 100,
+      y: 25
+    },
+    height: 50,
+    width: 160
   },
   imageSrc: playerIdle,
   frames: 8,
@@ -139,16 +145,20 @@ const enemy = new Fighter({
   },
   speed: 4.5,
   jumpHeight: 22,
-  offset: {
-    x: - 50,
-    y: 0
+  attackBox: {
+    offset: {
+      x: -170,
+      y: 30
+    },
+    height: 50,
+    width: 170
   },
   imageSrc: enemyIdle,
   frames: 4,
   scale: 2.5,
   imgOffset: {
     x: 215,
-    y: 157
+    y: 175
   },
   sprites : {
     idle : {
@@ -226,14 +236,9 @@ function animate() {
   c.fillRect(0,0, canvas.width, canvas.height);
   background.update();
   shop.update();
-  player.update();
   enemy.update();
-  if(player.isAttacking === false && player.isOnGround === true){
-    player.switchSprite(spriteNames.idle);
-  }
-  if(enemy.isAttacking === false && enemy.isOnGround === true){
-    enemy.switchSprite(spriteNames.idle);
-  }
+  player.update();
+
 
   
   // running
@@ -245,6 +250,9 @@ function animate() {
     player.switchSprite(spriteNames.run);
   } else {
     player.velocity.x = 0;
+    if(player.isAttacking === false && player.isOnGround === true){
+      player.switchSprite(spriteNames.idle);
+    }
   }
   
   if(keys.arrowLeft.pressed === true && enemy.lastKey === 'aL'){
@@ -253,27 +261,43 @@ function animate() {
   }else if (keys.arrowRight.pressed === true && enemy.lastKey === 'aR'){
     enemy.velocity.x = enemy.speed;
     enemy.switchSprite(spriteNames.run);
-  } else enemy.velocity.x = 0;
+  } else {
+    enemy.velocity.x = 0;
+    if(enemy.isAttacking === false && enemy.isOnGround === true){
+      enemy.switchSprite(spriteNames.idle);
+    }
+  }
   
   // detect collision when attacking
   if (u.rectangleCollisionCheck({
     rectangle1: player,
     rectangle2: enemy
-  })){
+  }) && player.currentFrame === 4){
     player.isAttacking = false;
     let currentHealthE = enemy.getCurrentHealthFraction(player.damage) * 100;
     document.querySelector("#enemy-health").style.width =  `${currentHealthE}%`;
    
   }
   
+  if(player.isAttacking && player.currentFrame >= 4){
+    player.isAttacking = false;
+  }
+  
   if(u.rectangleCollisionCheck({
     rectangle1: enemy,
     rectangle2: player
-  })){
+  }) && enemy.currentFrame === 2){
     enemy.isAttacking = false;
     let currentHealthP = player.getCurrentHealthFraction(enemy.damage) * 100;
     document.querySelector("#player-health").style.width = `${currentHealthP}%`;
+  } 
+  
+  if(enemy.isAttacking && enemy.currentFrame >= 2){
+    enemy.isAttacking = false;
   }
+  
+  
+  
   
   // end game based on health 
   if(enemy.health.currentHealth <= 0 || player.health.currentHealth <= 0){
@@ -337,7 +361,6 @@ window.addEventListener('keydown', (event) =>{
 });
 
 window.addEventListener('keyup', (event) =>{
-  console.log(event.key);
   switch (event.key) {
   case 'd':
     keys.d.pressed = false;
