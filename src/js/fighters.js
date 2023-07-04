@@ -55,6 +55,7 @@ class Fighter extends Sprite {
       sprites[sprite].image.src = sprites[sprite].imageSrc;
       
     }
+    this.dead = false;
     
     
   }
@@ -73,7 +74,7 @@ class Fighter extends Sprite {
   
   update () {
     this.draw();
-    this.animateFrames();
+    if(!this.dead) this.animateFrames();
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y + this.attackBox.offset.y;
     c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
@@ -89,7 +90,7 @@ class Fighter extends Sprite {
       this.switchSprite(spriteNames.fall);
       this.velocity.y += gravity;
       this.isOnGround = false;
-      // this.image = this.sprites[jump].imageS
+     
       
     }
     
@@ -150,9 +151,9 @@ class Fighter extends Sprite {
   }
   
   takeHit(damage){
-    console.log(damage);
-    this.health.current -= damage;
+
     this.switchSprite(spriteNames.takeHit);
+    this.health.current -= damage;
   }
   
   attack () {
@@ -169,6 +170,9 @@ class Fighter extends Sprite {
 
   getCurrentHealthFraction (damage) {
     this.health.currentHealth -= damage;
+    if(this.health.currentHealth === 0 ){
+      this.switchSprite(spriteNames.death);
+    }
     return this.health.currentHealth / this.health.totalHealth;
   }
   
@@ -190,10 +194,14 @@ class Fighter extends Sprite {
   }
   
   switchSprite(sprite){
-    
+
     let switched = false;
-    if(this.image === this.sprites.attack1.image && this.currentFrames < this.sprites.attack1.frames -1) return;
-    
+    if(this.image === this.sprites.death.image && this.currentFrames < this.sprites.death.frames) {
+      this.dead = true; 
+      return;
+    }
+    if(this.image === this.sprites.takeHit.image && this.currentFrames < this.sprites.takeHit.frames) return;
+    if(this.image === this.sprites.attack1.image && this.currentFrames < this.sprites.attack1.frames) return;
     switch(sprite) {
     case spriteNames.idle:
       if(this.image !== this.sprites.idle.image){
@@ -256,6 +264,9 @@ class Fighter extends Sprite {
     if(switched === true){
       this.currentFrame = 0;
       this.framesElapsed = 0;
+    }
+    if(sprite === 'takeHit'){
+      console.log(this.image);
     }
   }
   
