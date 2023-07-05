@@ -19,7 +19,7 @@ import enemyAttack1 from '../assets/EnemyHero/Sprites/Attacking1.png';
 import enemyAttack2 from '../assets/EnemyHero/Sprites/Attacking2.png';
 import enemyDeath from '../assets/EnemyHero/Sprites/Dying.png';
 import enemyFall from '../assets/EnemyHero/Sprites/Falling.png';
-import enemyHit from '../assets/EnemyHero/Sprites/Takehiting.png';
+import enemyHit from '../assets/EnemyHero/Sprites/TakingHit.png';
 
 
 
@@ -68,7 +68,6 @@ const player = new Fighter({
   position : {
     x: 0,
     y: 0 },
-  color: 'red',
   velocity: {
     x: 0,
     y: 0
@@ -138,7 +137,6 @@ const enemy = new Fighter({
   position : {
     x: 950,
     y: 0 },
-  color: 'blue',
   velocity: {
     x: 0,
     y: 0
@@ -319,12 +317,12 @@ window.addEventListener('keydown', (event) =>{
     keys.d.pressed = true;
     player.lastKey = 'd';
     
-    player.switch();
+    // player.switch();
     break;
   case 'a':
     keys.a.pressed = true;
     player.lastKey  = 'a';
-    player.switch();
+    // player.switch();
     break;
   case 'w':
     player.jump();
@@ -347,12 +345,12 @@ window.addEventListener('keydown', (event) =>{
     case 'ArrowRight':
       keys.arrowRight.pressed = true;
       enemy.lastKey = 'aR';
-      enemy.switch();
+      // enemy.switch();
       break;
     case 'ArrowLeft': 
       keys.arrowLeft.pressed = true;
       enemy.lastKey = 'aL';
-      enemy.switch();
+      // enemy.switch();
       break;
     case 'ArrowUp': 
       enemy.jump();
