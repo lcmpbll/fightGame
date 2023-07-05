@@ -140,13 +140,23 @@ class Fighter extends Sprite {
   }
   
   switch () {
-    // if(this.lastKey === 'd' || this.lastKey === 'aR'){
+    //BUG
+    
+    // const imageOrient = this.image.getContext('2d');
+    
+    if(this.lastKey === 'd' && this.attackBox.offset.x < 0){
       
-    //   this.attackBox.offset.x *= -1;
-      
-    // } else {
-    //   // this.attackBox.offset.x *= -1; 
-    // }
+      this.attackBox.offset.x *= -1;
+      this.turn(this.image);
+    } else if(this.lastKey === 'a' && this.attackBox.offset.x > 0) {
+      this.attackBox.offset.x *= -1; 
+    }
+    
+    if(this.lastKey ==='aR' && this.attackBox.offset.x < 0) {
+      this.attackBox.offset.x *= -1;
+    } else if (this.lastKey === 'aL' && this.attackBox.offset.x > 0){
+      this.attackBox.offset.x *= -1;
+    }
   
   }
   
@@ -200,7 +210,9 @@ class Fighter extends Sprite {
       this.dead = true; 
       return;
     }
-    if(this.image === this.sprites.takeHit.image && this.currentFrames < this.sprites.takeHit.frames) return;
+    if(this.image === this.sprites.takeHit.image && this.currentFrames < this.sprites.takeHit.frames){
+      return;
+    } 
     if(this.image === this.sprites.attack1.image && this.currentFrames < this.sprites.attack1.frames) return;
     switch(sprite) {
     case spriteNames.idle:
@@ -265,9 +277,7 @@ class Fighter extends Sprite {
       this.currentFrame = 0;
       this.framesElapsed = 0;
     }
-    if(sprite === 'takeHit'){
-      console.log(this.image);
-    }
+  
   }
   
 
