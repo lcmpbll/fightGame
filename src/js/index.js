@@ -2,6 +2,7 @@ import Fighter from './fighters.js';
 import backgroundImage from '../assets/scenes/background/background.png';
 import shopImage from '../assets/scenes/decorations/shop_anim.png';
 import Sprite from '../js/sprite.js';
+import gsap from 'gsap';
 /// Player Imports
 import playerIdle from '../assets/PlayerHero/Idle.png';
 import playerFall from '../assets/PlayerHero/Fall.png';
@@ -234,6 +235,8 @@ function animate() {
   c.fillRect(0,0, canvas.width, canvas.height);
   background.update();
   shop.update();
+  c.fillStyle = 'rgba(255, 255, 255, 0.1)';
+  c.fillRect(0, 0, canvas.width, canvas.height);
   enemy.update();
   player.update();
 
@@ -273,7 +276,10 @@ function animate() {
   }) && player.currentFrame === 4){
     enemy.takeHit(player.damage);
     let currentHealthE = enemy.getCurrentHealthFraction(player.damage) * 100;
-    document.querySelector("#enemy-health").style.width =  `${currentHealthE}%`;
+    //document.querySelector("#enemy-health").style.width =  `${currentHealthE}%`;
+    gsap.to("#enemy-health", {
+      width: currentHealthE + '%'
+    });
    
   }
   
@@ -288,7 +294,10 @@ function animate() {
     
     player.takeHit(enemy.damage);
     let currentHealthP = player.getCurrentHealthFraction(enemy.damage) * 100;
-    document.querySelector("#player-health").style.width = `${currentHealthP}%`;
+    // document.querySelector("#player-health").style.width = `${currentHealthP}%`;
+    gsap.to("#player-health", {
+      width: currentHealthP + '%'
+    });
   } 
   
   if(enemy.isAttacking && enemy.currentFrame >= 2){
