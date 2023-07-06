@@ -32,7 +32,14 @@ class Sprite {
   }
   
   draw () {
+
     c.drawImage(this.image, this.currentFrame * (this.image.width / this.frames), 0, this.image.width/this.frames , this.image.height, this.position.x - this.offset.x, this.position.y - this.offset.y, this.image.width/this.frames * this.scale, this.image.height * this.scale);
+    
+  }
+  
+  turn () {
+    // c.clearRect(this.position.x, this.position.y, this.width, this.height);
+    console.log('cleared');
   }
   
   update () {
