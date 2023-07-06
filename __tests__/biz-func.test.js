@@ -1,4 +1,4 @@
-import Sprite from '../src/js/sprite.js';
+import Sprite from '../src/js/fighters.js';
 
 
 describe("Sprite", () => {
@@ -68,7 +68,7 @@ describe("Sprite", () => {
     expect(newSprite.isDucked).toEqual(false);
   });
   
-   test("should create a new sprite with headHeight of 150", () => {
+  test("should create a new sprite with headHeight of 150", () => {
     expect(newSprite.headHeight).toEqual(150);
   });
   
@@ -216,6 +216,12 @@ describe("Sprite", () => {
     newSprite.health.currentHealth = 10;
     newSprite.reset(playerStartInfo);
     expect(newSprite.health.currentHealth).toEqual(newSprite.health.totalHealth);
+  });
+  
+  test("should reduce the current health of the enemy by 10", () => {
+    const health = newSprite.health.currentHealth;
+    newSprite.takeHit(10);
+    expect(newSprite.health.currentHealth).toEqual(health -10);
   });
   
   
