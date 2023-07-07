@@ -240,7 +240,7 @@ function animate() {
   enemy.update();
   player.update();
 
-
+  // console.log(player.image);
   
   // running
   if(keys.a.pressed === true && player.lastKey === 'a'){
@@ -251,7 +251,7 @@ function animate() {
     player.switchSprite(spriteNames.run);
   } else {
     player.velocity.x = 0;
-    if(player.isAttacking === false && player.isOnGround === true){
+    if( player.isOnGround === true){
       player.switchSprite(spriteNames.idle);
     }
   }
@@ -264,7 +264,7 @@ function animate() {
     enemy.switchSprite(spriteNames.run);
   } else {
     enemy.velocity.x = 0;
-    if(enemy.isAttacking === false && enemy.isOnGround === true){
+    if( enemy.isOnGround === true){
       enemy.switchSprite(spriteNames.idle);
     }
   }
