@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "jest": {
+    "moduleNameMapper": {
+         "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
+         "\\.(css|less)$": "<rootDir>/mocks/fileMock.js"
+       }
+   },
   "scripts": {
     "build": "webpack --mode development",
     "start": "npm run build; webpack-dev-server --open --mode development",
