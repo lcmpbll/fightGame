@@ -38,6 +38,7 @@ describe("Sprite", () => {
       }
  
     });
+
     
   //   const createElement = document.createElement.bind(document);
   //   document.createElement = (tagName) => {
@@ -49,7 +50,7 @@ describe("Sprite", () => {
   //     }
   //     return createElement(tagName);
   //   };
-  // });
+  });
   
 
   test("should create a new sprite object ", () => {
