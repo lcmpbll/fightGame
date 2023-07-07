@@ -115,7 +115,7 @@ class Fighter extends Sprite {
   shortLand () {
     this.isDucked = false;
     this.height = this.headHeight;
-    this.switchSprite(spriteNames.idle);
+  
   }
   
   //currently more of a leg sweep dodge
@@ -198,14 +198,14 @@ class Fighter extends Sprite {
   switchSprite(sprite){
 
     let switched = false;
-    if(this.image === this.sprites.death.image && this.currentFrames < this.sprites.death.frames) {
+    if(this.image === this.sprites.death.image && this.currentFrames < this.sprites.death.frames -1) {
       this.dead = true; 
       return;
     }
-    if(this.image === this.sprites.takeHit.image && this.currentFrames < this.sprites.takeHit.frames){
+    if(this.image === this.sprites.takeHit.image && this.currentFrames < this.sprites.takeHit.frames -1){
       return;
     } 
-    if(this.image === this.sprites.attack1.image && this.currentFrames < this.sprites.attack1.frames) return;
+    if(this.image === this.sprites.attack1.image && this.currentFrames < this.sprites.attack1.frames -1) return;
     switch(sprite) {
     case spriteNames.idle:
       if(this.image !== this.sprites.idle.image){
