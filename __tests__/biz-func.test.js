@@ -1,8 +1,10 @@
 import Sprite from '../src/js/fighters.js';
+import { rectangleCollisionCheck } from '../src/js/utility.js';
 
 
 describe("Sprite", () => {
   let newSprite;
+  let opSprite;
   const playerStartInfo = {
     position : {
       x: 0,
@@ -34,10 +36,20 @@ describe("Sprite", () => {
         x: 0,
         y: 0
       }
-      
  
     });
-  });
+    
+  //   const createElement = document.createElement.bind(document);
+  //   document.createElement = (tagName) => {
+  //     if (tagName === 'canvas') {
+  //       return {
+  //         getContext: () => ({}),
+  //         measureText: () => ({})
+  //       };
+  //     }
+  //     return createElement(tagName);
+  //   };
+  // });
   
 
   test("should create a new sprite object ", () => {
@@ -224,6 +236,28 @@ describe("Sprite", () => {
     expect(newSprite.health.currentHealth).toEqual(health -10);
   });
   
+  test("should block the attack if player attack at the correct time", () => {
+    opSprite = new Sprite({
+      position : {
+        x: 0,
+        y: 0
+      },
+      color: 'red',  
+      velocity: {
+        x: 0,
+        y: 0
+      },
+      speed: 5,
+      jumpHeight: 20,
+      offset: {
+        x: 0,
+        y: 0
+      }
+    });
+    rectangleCollisionCheck({rectangle1: newSprite, rectangle2: opSprite});
+    expect(opSprite.health.currentHealth).toEqual(opSprite.health.totalHealth);
+    
+  });
   
   
   
