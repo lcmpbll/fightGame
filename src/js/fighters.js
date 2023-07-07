@@ -60,24 +60,14 @@ class Fighter extends Sprite {
     
   }
   
-  // draw () {
-  //   c.fillStyle = this.color;
-  //   c.fillRect(this.position.x, this.position.y, this.width, this.height);
-    
-  //   // attack box
-  //   if(this.isAttacking){
-  //     c.fillStyle = 'yellow';
-  //     c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
-      
-  //   }
-  // }
+
   
   update () {
     this.draw();
     if(!this.dead) this.animateFrames();
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y + this.attackBox.offset.y;
-    c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
+    // c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
     // y movement
@@ -86,6 +76,7 @@ class Fighter extends Sprite {
       this.velocity.y = 0;
       this.isOnGround = true;
       this.position.y = groundLevel;
+      
     } else {
       this.switchSprite(spriteNames.fall);
       this.velocity.y += gravity;
@@ -124,6 +115,7 @@ class Fighter extends Sprite {
   shortLand () {
     this.isDucked = false;
     this.height = this.headHeight;
+    this.switchSprite(spriteNames.idle);
   }
   
   //currently more of a leg sweep dodge
