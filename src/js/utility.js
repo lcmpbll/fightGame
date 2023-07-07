@@ -19,13 +19,30 @@ export function decreaseTimer () {
 
 
 export function rectangleCollisionCheck ({rectangle1, rectangle2}) {
-  if(rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x && 
-    rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width && 
-    rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
-    rectangle1.attackBox.position.y  <= rectangle2.position.y + rectangle2.height && rectangle1.isAttacking ){
-   
+  if(rectangle2.isAttacking === false || rectangle1.isAttacking === false){
+    if(rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x && 
+      rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width && 
+      rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
+      rectangle1.attackBox.position.y  <= rectangle2.position.y + rectangle2.height && rectangle1.isAttacking ){
+     
+      console.log('damage')
+      return true;
+    }
     
-    return true;
+  } else {
+    if(rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x && 
+      rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width && 
+      rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
+      rectangle1.attackBox.position.y  <= rectangle2.position.y + rectangle2.height && rectangle1.isAttacking &&
+      rectangle1.attackBox.position.x <= rectangle2.attackBox.position.x === false && 
+      rectangle1.attackBox.position.x- rectangle1.attackBox.width > rectangle2.attackBox.position.x + rectangle2.attackBox.width === false){
+      console.log('attacked');
+      
+      return true;
+    } else {
+      console.log('blocked');
+      return false;
+    }
   }
 }
 
